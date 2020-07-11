@@ -14,8 +14,6 @@ I am only add tiny fixes:
     - SuperMikeMan's fix for "bpm apply". Critical bug fixed.
     - Command-line usage from retro beat_v01.
     - Hide background application window for Windows.
-    - SuperMikeMan's fix for "bpa apply". Critical bug fixed.
-    - Add bpa for GUI.
 
 **Make beat_v03 v01 again!**
 
