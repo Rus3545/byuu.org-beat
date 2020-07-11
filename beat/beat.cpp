@@ -8,7 +8,7 @@ using namespace phoenix;
 #include "resource/resource.hpp"
 #include "resource/resource.cpp"
 
-const string Title = "beat v03";
+const string Title = "beat v03+";
 
 struct Program : Window {
   VerticalLayout layout;
@@ -231,12 +231,12 @@ int main(int argc, char **argv) {
   for(unsigned n = 1; n < args.size();) {
     if(0);
 
-    else if(args[n] == "-encode") {
+    else if(args[n] == "-create") {
       create = true;
       n++;
     }
 
-    else if(args[n] == "-decode") {
+    else if(args[n] == "-apply") {
       apply = true;
       n++;
     }
@@ -256,7 +256,7 @@ int main(int argc, char **argv) {
       n += 2;
     }
 
-    else if(args[n] == "-t" && n + 1 < args.size()) {
+    else if(args[n] == "-o" && n + 1 < args.size()) {
       target = args[n + 1];
       n += 2;
     }
@@ -343,10 +343,11 @@ int main(int argc, char **argv) {
 
   print(Title, "\n");
   print("author: byuu\n");
+  print("editor: FoX\n");
   print("license: GPLv3\n\n");
 
-  print("usage 1: beat -decode -p pack -t target [source]\n");
-  print("usage 2: beat -encode [-delta] [-m manifest] -p pack -t target [source]\n");
+  print("usage 1: beat -apply -p patch -o output input\n");
+  print("usage 2: beat -create [-delta] [-m manifest] -p patch -o output input\n");
 
   return 0;
 }

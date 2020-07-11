@@ -5,6 +5,8 @@ static void Application_processDialogMessage(MSG&);
 static LRESULT CALLBACK Application_windowProc(HWND, UINT, WPARAM, LPARAM);
 
 void pApplication::run() {
+  HWND hWnd = GetConsoleWindow();
+  ShowWindow( hWnd, SW_HIDE );
   MSG msg;
   if(Application::main) {
     while(applicationState.quit == false) {

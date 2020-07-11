@@ -44,7 +44,7 @@ ifeq ($(compiler),)
     flags := -w -stdlib=libc++
     link := -lc++ -lobjc
   else
-    compiler := g++-4.7
+    compiler := g++-4.8
     flags :=
     link :=
   endif
@@ -55,9 +55,16 @@ ifeq ($(compiler),)
   objcppflags := -x objective-c++ -std=gnu++11
 endif
 
-ifeq ($(arch),x86)
+arch := $(shell arch)
+
+ifeq ($(arch),i686)
   flags := -m32 $(flags)
   link := -m32 $(link)
+endif
+
+ifeq ($(arch),x86_64)
+  flags := -m64 $(flags)
+  link := -m64 $(link)
 endif
 
 ifeq ($(prefix),)
