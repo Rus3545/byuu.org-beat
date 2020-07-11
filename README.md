@@ -1,4 +1,4 @@
-Beat v03+
+Beat v03++
 ====
 
 beat is a delta-based binary differencing patcher and specification.
@@ -11,9 +11,11 @@ It encodes the differences between either a) two files, or b) two folders, and s
 
 I am only add tiny fixes:
 
-    - SuperMikeMan's fix for "bpm apply". Critical bug fixed.
+    - **SuperMikeMan**'s fix for **bpm apply**. Critical bug fixed
     - Command-line usage from retro beat_v01.
     - Hide background application window for Windows.
+    - **SuperMikeMan**'s fix for **bpa apply**. Critical bug fixed
+    - Add bpa for GUI.
 
 **Make beat_v03 v01 again!**
 
@@ -25,13 +27,6 @@ Command-line usage now suit for help file:
 For **bps** better to use [Flips](https://github.com/Alcaro/Flips).
 
 To analyze code evolution **multi.hpp** see [Link](https://archive.org/details/tukuyomi-snes-archive) 2011-2013.
-
-## For compilation required:
-
-    gtk+2.0
-    gcc-4.8-base
-    g++-4.8
-
 
 ## Screenshot
 

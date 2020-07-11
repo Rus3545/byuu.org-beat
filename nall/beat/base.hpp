@@ -68,11 +68,8 @@ protected:
 
   string readString(unsigned length) {
     string text;
-    text.reserve(length + 1);
-    for(unsigned n = 0; n < length; n++) {
-      text[n] = fp.read();
-      checksum = crc32_adjust(checksum, text[n]);
-    }
+    text.resize(length + 1);
+    for(unsigned n = 0; n < length; n++) text[n] = read();
     text[length] = 0;
     return text;
   }

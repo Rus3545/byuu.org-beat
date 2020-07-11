@@ -8,7 +8,7 @@ using namespace phoenix;
 #include "resource/resource.hpp"
 #include "resource/resource.cpp"
 
-const string Title = "beat v03+";
+const string Title = "beat v03++";
 
 struct Program : Window {
   VerticalLayout layout;
@@ -21,6 +21,7 @@ struct Program : Window {
       Label optionsLabel;
       CheckButton manifestFlag;
       CheckButton deltaFlag;
+//      CheckButton flipsFlag;
 
   Program(int argc, char **argv) {
     string basepath = dir(realpath(argv[0]));
@@ -31,27 +32,29 @@ struct Program : Window {
 
     layout.setMargin(5);
     applyButton.setImage({resource::apply, sizeof resource::apply});
-    applyButton.setText("Apply Patch");
+    applyButton.setText("Apply Archive|Patch");
     fileButton.setImage({resource::file, sizeof resource::file});
     fileButton.setText("Create File Patch");
     pathButton.setImage({resource::path, sizeof resource::path});
-    pathButton.setText("Create Folder Patch");
+    pathButton.setText("Create Folder Archive|Patch");
     helpButton.setImage({resource::help, sizeof resource::help});
     helpButton.setText("Help");
     optionsLabel.setText("Patch creation options:");
     manifestFlag.setText("Embed manifest");
     deltaFlag.setText("Delta mode");
+//    flipsFlag.setText("Flips mode (Alcaro's delta)");
 
     append(layout);
     layout.append(actionLayout, {0, 0}, 5);
       actionLayout.append(applyButton, {0, 0}, 5);
       actionLayout.append(fileButton, {0, 0}, 5);
-      actionLayout.append(pathButton, {0, 0}, helpExists ? 5 : 0);
-      if(helpExists) actionLayout.append(helpButton, {0, 0});
+      actionLayout.append(pathButton, {0, 0}, helpExists ? 5 : 0); 
+      if(helpExists) actionLayout.append(helpButton, {0, 0});  
     layout.append(controlLayout, {0, 0});
       controlLayout.append(optionsLabel, {0, 0}, 5);
       controlLayout.append(manifestFlag, {0, 0}, 5);
-      controlLayout.append(deltaFlag, {0, 0});
+      controlLayout.append(deltaFlag, {0, 0}, 5);
+//      controlLayout.append(flipsFlag, {0, 0});
 
     onClose = &Application::quit;
     applyButton.onActivate = [=] { applyPatch(); };
@@ -83,7 +86,7 @@ struct Program : Window {
   }
 
   void applyPatch(string modifyName = "") {
-    if(modifyName.empty()) modifyName = BrowserWindow().setParent(*this).setFilters("beat patches (*.bps,*.bpm)").open();
+    if(modifyName.empty()) modifyName = BrowserWindow().setParent(*this).setFilters("beat patches, archive (*.bps,*.bpm,*.bpa)").open();
     if(modifyName.empty()) return;
     if(!file::exists(modifyName)) return;
 
@@ -134,6 +137,20 @@ struct Program : Window {
         directory::remove(targetName);
       }
       setBusy(false);
+      //add BPA
+    } else if(modifyName.iendswith(".bpa")) {
+      string targetName = BrowserWindow().setParent(*this).setPath(dir(modifyName)).directory();
+      if(targetName.empty()) return;
+
+      setBusy(true);
+      beatArchive archive;
+      if(archive.unpack(modifyName, targetName)) {
+        MessageWindow().setParent(*this).setText("Archive extraction was successful!").information();
+      } else {
+        MessageWindow().setParent(*this).setText("Archive extraction has failed!").information();
+        directory::remove(targetName);
+      }
+      setBusy(false);
     }
   }
 
@@ -181,7 +198,23 @@ struct Program : Window {
     string sourceName = BrowserWindow().setParent(*this).directory();
     if(sourceName.empty()) return;
     string targetName = BrowserWindow().setParent(*this).setPath(parentdir(sourceName)).directory();
-    if(targetName.empty()) return;
+    if(targetName.empty()) {
+    //add BPA
+    if (string modifyName = BrowserWindow().setParent(*this).setPath(parentdir(targetName)).setFilters("beat archive (*.bpa)").save()) {
+    if(modifyName.empty()) return;
+
+    setBusy(true);
+    beatArchive archive;
+    if(archive.create(modifyName, sourceName)) {
+      MessageWindow().setParent(*this).setText("Archive creation was successful!").information();
+    } else {
+      MessageWindow().setParent(*this).setText("Archive creation has failed!").error();
+    }
+    setBusy(false);
+    return;
+    } else return;
+    }  
+
     if(sourceName == targetName) {
       MessageWindow().setParent(*this).setText("Source and target folder names cannot be the same.\n").error();
       return;
@@ -347,7 +380,15 @@ int main(int argc, char **argv) {
   print("license: GPLv3\n\n");
 
   print("usage 1: beat -apply -p patch -o output input\n");
-  print("usage 2: beat -create [-delta] [-m manifest] -p patch -o output input\n");
+  print("usage 2: beat -create [-delta] [-m manifest] -p patch -o output input\n\n");
+
+  print("example 1: beat -apply -p patch.bps -o output input\n");
+  print("example 2: beat -create -delta -p patch.bps -o output input\n");
+  print("example 3: beat -apply -p patch.bpm -o output/ input/\n");
+  print("example 4: beat -create -m manifest.xml -p patch.bpm -o output/ input/\n\n");
+
+  print("example 5: beat -apply -p archive.bpa -o output/\n");
+  print("example 6: beat -create -p archive.bpa -o input/\n");
 
   return 0;
 }
