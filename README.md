@@ -11,10 +11,10 @@ It encodes the differences between either a) two files, or b) two folders, and s
 
 I am only add tiny fixes:
 
-    - **SuperMikeMan**'s fix for **bpm apply**. Critical bug fixed
+    - SuperMikeMan's fix for "bpm apply". Critical bug fixed
     - Command-line usage from retro beat_v01.
     - Hide background application window for Windows.
-    - **SuperMikeMan**'s fix for **bpa apply**. Critical bug fixed
+    - SuperMikeMan's fix for "bpa apply". Critical bug fixed
     - Add bpa for GUI.
 
 **Make beat_v03 v01 again!**
@@ -26,7 +26,7 @@ Command-line usage now suit for help file:
 
 For **bps** better to use [Flips](https://github.com/Alcaro/Flips).
 
-To analyze code evolution **multi.hpp** see [Link](https://archive.org/details/tukuyomi-snes-archive) 2011-2013.
+To analyze code evolution **multi.hpp** see [Link](https://archive.org/details/tukuyomi-snes-archive) 2012-2018.
 
 ## Screenshot
 
@@ -44,10 +44,10 @@ See [Original README](http://htmlpreview.github.io/?https://github.com/Rus3545/b
 
 [byuu](https://byuu.org/tool/beat/)
 
-## For help
+## For help (Здесь будет выложен кусочек архивного warc с этими ветками за 14 год + ещё один warc за 15, так как byuubackup более недоступен)
 [Link1](http://151.236.14.55/byuubackup/viewtopic.php@f=10&t=3114.html), 
 [Link2](http://151.236.14.55/byuubackup/viewtopic.php@f=10&t=3161.html), 
 [Link3](http://151.236.14.55/byuubackup/viewtopic.php@f=10&t=3092.html), 
-[Link4](http://helmet.kafuka.org/byuubackup/viewtopic.php@f=10&t=1919.html), 
+[Link4](http://151.236.14.55/byuubackup/viewtopic.php@f=10&t=1919.html), 
 [Link5](https://www.smwcentral.net/?p=viewthread&t=73147), 
 [Link6](https://www.romhacking.net/forum/index.php?topic=15252.0).
